@@ -12,33 +12,33 @@ If you have questions or remarks mail at gratien . dhaese @ gmail . com
 - Oracle VirtualBox
 - InSpec from Chef
 - git (to clone this git repo: https://github.com/gdha/inspec-workshop)
+  (on Mac) run: `git clone https://github.com/gdha/inspec-workshop`
+  *Note*: where-ever you see "(on Mac)" means on your local workstation, laptop (Unix alike preferred)
+- (on Mac) run: `cd inspec-workshop`
+- (on Mac) run: `export BASEDIR=$PWD`
 
 ## Start of docker mychefdf
-- go to directory inspec-workshop/docker-chefdk
-- run: `./build-chefdk`
-- run: `./run-chefdk`
+- (on Mac) run: `cd $BASEDIR/docker-chefdk`
+- (on Mac) run: `./build-chefdk`
+- (on Mac) run: `./run-chefdk`
 - (inside the container) run: `inspec exec /cookbooks/myaccount/test/integration/default/default_test.rb`
 
 ## In another Bash shell windows (on your Linux or Mac)
-- go to directory `inspec-workshop/cookbooks/myaccount/test/integration/default`
-- run: `docker ps -a`
-- run: `docker rename $(docker ps -q) inspec-demo`
-- run: `docker ps -a`
-- run: `inspec exec default_test.rb -t docker://$(docker ps -q)`
+- (on Mac) run: `cd $BASEDIR/cookbooks/myaccount/test/integration/default`
+- (on Mac) run: `inspec exec default_test.rb -t docker://$(docker ps -q)`
 
 ## Remediate the mychefdk container with chef cookbook myaccount
 - (inside the container) run: `chef-client -z -o myaccount`
-- (inside the container) run: `inspec exec /cookbook/myaccount/test/integration/default/default_test.rb`
 - (on Mac) run: `inspec exec default_test.rb -t docker://$(docker ps -q)`
 
 ## Demonstrate the dockerprofile
-- go to directory `inspec-workshop/`
+- (on Mac) run: `cd $BASEDIR`
 - (on Mac) run: `inspec exec dockerprofile/controls/docker.rb`
-- run: `docker rename $(docker ps -q) inspec-demo`
+- (on Mac) run: `docker rename $(docker ps -q) inspec-demo`
 - (on Mac) run: `inspec exec dockerprofile/controls/docker.rb`
 - (on Mac) run: `inspec exec dockerprofile`
 
-## Demonstrate InSpec Shell
+## Demonstrate InSpec Shell (exercise for you)
 - (on Mac) if container runs in detached mode run: `docker exec -it inspec-demo /bin/bash`
 - (inside the container) run: `inspec shell`
 - (inside the container) run: inspec> `help`
@@ -50,31 +50,45 @@ If you have questions or remarks mail at gratien . dhaese @ gmail . com
      end 
 ```
 
-## Demonstrate InSpec profile
+## Demonstrate InSpec profile (exercise for you)
 - (inside the container) run: `inspec init profile newprofile`
 - (inside the container) run: `inspec check newprofile`
+- (inside the container) run: `cd newprofile`
+- browse and look at the different directories and files being created
 
-## Demonstrate Vagrant with InSpec
-- go to directory `inspec-workshop/vagrant-ubuntu18`
+## Launch Vagrant VM
+- (on Mac) run: `cd $BASEDIR/vagrant-ubuntu18`
 - (on Mac) run: `vagrant status`
 - (on Mac) run: `vagrant up --provision`
 - (on Mac) optional: `echo '192.168.33.10 client' >> /etc/hosts`
-- (on Mac) run: `inspec exec -t ssh://client --password vagrant ../path-check/`
+
+# Demonstrate the path-check InSpec profile (in different ways)
+## Check on Mac itself via full path:
+- (on Mac) run: `inspec exec $BASEDIR/path-check`
+## Check on Mac itself via git repo:
+- (on Mac) run: `inspec exec https://github.com/gdha/inspec-path-check`
+## Check the docker container:
+- (on Mac) run: `inspec exec -t docker://$(docker ps -q) path-check`
+## Check the vagrant VM:
+- (on Mac) run: `inspec exec -t ssh://client --password vagrant $BASEDIR/path-check`
+
+# Demonstrate the ssh-baseline InSpec profile (on Vagrant VM)
 - (on Mac) run: `inspec exec -t ssh://client --password vagrant https://github.com/dev-sec/ssh-baseline`
 ```
-     [expected output] Test Summary: 38 successful, 60 failures, 2 skipped
+     [expected output] Test Summary: 38 successful, 59 failures, 3 skipped
 ```
 - (on Mac) run: `vagrant ssh`
-- (inside vagrant): run: `cd /home/vagrant`
+- (inside vagrant): run: `cd /home/vagrant` (optional)
 - (inside vagrant): run: `sudo ansible-playbook /vagrant/ansible-ssh-hardening.yml`
+- (inside vagrant): run: `exit`
 - (on Mac) run: `inspec exec -t ssh://client --password vagrant https://github.com/dev-sec/ssh-baseline`
 ```
-     [expected output] Test Summary: 94 successful, 4 failures, 2 skipped
+     [expected output] Test Summary: 94 successful, 3 failures, 3 skipped
 ```
 - (on Mac) run: `vagrant halt` (to stop the VM), or `vagrant destroy` (to stop&remove the VM)
  
 ## Demonstrate kitchen test together with InSpec
-- go to directory `inspec-workshop/cookbooks/nginx_test`
+- (on Mac) run: `cd $BASEDIR/cookbooks/nginx_test`
 - (on Mac) run: `cat recipes/default.rb`
 - (on Mac) run: `kitchen converge`
 - (on Mac) run: `kitchen verify`

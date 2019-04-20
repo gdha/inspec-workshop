@@ -1,3 +1,2 @@
-BASEDIR=/Users/gdha/data/projects/inspec/inspec-cfgmgmtcamp-ghent-2019
-HOMEDIR=/Users/gdha
-docker run -it -v /var/run/docker.sock:/var/run/docker.sock -v $BASEDIR/cookbooks:/cookbooks  -v $HOMEDIR/.gitconfig:/home/gdha/.gitconfig -v $HOMEDIR/.vimrc:/home/gdha/.vimrc -v $HOMEDIR/.vim:/home/gdha/.vim  mychefdk
+BASEDIR=$HOME/data/projects/inspec/inspec-workshop
+docker run -it -v /var/run/docker.sock:/var/run/docker.sock -v $BASEDIR/cookbooks:/cookbooks  -v $HOME/.gitconfig:/home/gdha/.gitconfig -v $HOME/.vimrc:/home/gdha/.vimrc -v $HOME/.vim:/home/gdha/.vim  mychefdk

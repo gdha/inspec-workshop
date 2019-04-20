@@ -1,0 +1,40 @@
+---
+
+# Below is coming from https://github.com/dev-sec/ansible-ssh-hardening
+# Modified by Gratien Dhaese (set root password)
+- name: wrapper playbook for kitchen testing "ansible-ssh-hardening" with default settings
+  hosts: localhost
+  pre_tasks:
+    - package: name="{{item}}" state=present
+      with_items:
+        - "openssh-client"
+        - "openssh-server"
+      ignore_errors: true
+    - apt: name="{{item}}" state=present update_cache=true
+      with_items:
+        - "openssh-client"
+        - "openssh-server"
+      ignore_errors: true
+    - file: path="/var/run/sshd" state=directory
+    - name: create ssh host keys
+      command: "ssh-keygen -A"
+      when: not ((ansible_os_family in ['Oracle Linux', 'RedHat']) and ansible_distribution_major_version < '7')
+    - name: Generate password
+      shell: python -c 'import crypt; print crypt.crypt("vagrant", "$1$SomeSalt$")'
+      register: genpass
+    - name: Creating admin group
+      group: name=admin system=yes state=present
+    - name: Creating users with admin access
+      user: name=vagrant password={{ genpass.stdout }} groups=admin shell=/bin/bash createhome=yes append=yes
+    - name: Set root password
+      user: name=root password={{ genpass.stdout }} groups=admin shell=/bin/bash createhome=yes append=yes
+
+  roles:
+    - ansible-ssh-hardening
+  vars:
+    ssh_client_password_login: true
+    ssh_compression: true
+    ssh_allow_users: 'root kitchen vagrant'
+    ssh_allow_groups: 'root kitchen vagrant'
+    ssh_permit_root_login: 'yes'
+    ssh_server_password_login: true

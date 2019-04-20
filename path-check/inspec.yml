@@ -1,0 +1,10 @@
+name: path-check
+title: PATH check InSpec Profile
+maintainer: Gratien Dhaese
+copyright: The Authors
+copyright_email: gratien.dhaese@gmail.com
+license: GPLv3
+summary: An InSpec Compliance Profile to verify PATH variable
+version: 0.1.0
+supports:
+  platform: os

@@ -2,6 +2,8 @@
 
 The InSpec Workshop examples - presented by Gratien D'haese
 
+The presentation: https://github.com/gdha/inspec-workshop/blob/master/WhatDidYouInSpec-loadays-2019.pdf
+
 If you have questions or remarks mail us at gratien . dhaese @ gmail . com
 
 ## Pre-requisites

@@ -14,7 +14,7 @@ If you have questions or remarks mail us at gratien . dhaese @ gmail . com
 - Oracle VirtualBox (https://www.virtualbox.org/wiki/Downloads)
 - InSpec from Chef (https://www.inspec.io/downloads/)
 - `git` (to clone this git repo: https://github.com/gdha/inspec-workshop)
-  (on Mac) run: `git clone https://github.com/gdha/inspec-workshop`
+- (on Mac) run: `git clone https://github.com/gdha/inspec-workshop`
 
   *Note*: where-ever you see "(on Mac)" means on your local workstation, laptop (Unix alike preferred)
 

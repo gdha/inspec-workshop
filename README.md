@@ -1,19 +1,21 @@
-# The "What did you InSpec" Workshop
+# The "What did you InSpec?" Workshop
 
 The InSpec Workshop examples - presented by Gratien D'haese
 
-If you have questions or remarks mail at gratien . dhaese @ gmail . com
+If you have questions or remarks mail us at gratien . dhaese @ gmail . com
 
 ## Pre-requisites
 - Linux or Mac OS/X system
-- vim editor or alike
-- docker
-- vagrant
-- Oracle VirtualBox
-- InSpec from Chef
-- git (to clone this git repo: https://github.com/gdha/inspec-workshop)
+- `vim` editor or alike
+- docker (https://www.docker.com/get-started)
+- vagrant (https://www.vagrantup.com/downloads.html)
+- Oracle VirtualBox (https://www.virtualbox.org/wiki/Downloads)
+- InSpec from Chef (https://www.inspec.io/downloads/)
+- `git` (to clone this git repo: https://github.com/gdha/inspec-workshop)
   (on Mac) run: `git clone https://github.com/gdha/inspec-workshop`
+
   *Note*: where-ever you see "(on Mac)" means on your local workstation, laptop (Unix alike preferred)
+
 - (on Mac) run: `cd inspec-workshop`
 - (on Mac) run: `export BASEDIR=$PWD`
 
@@ -62,17 +64,17 @@ If you have questions or remarks mail at gratien . dhaese @ gmail . com
 - (on Mac) run: `vagrant up --provision`
 - (on Mac) optional: `echo '192.168.33.10 client' >> /etc/hosts`
 
-# Demonstrate the path-check InSpec profile (in different ways)
-## Check on Mac itself via full path:
+## Demonstrate the path-check InSpec profile (in different ways)
+### Check on Mac itself via full path:
 - (on Mac) run: `inspec exec $BASEDIR/path-check`
-## Check on Mac itself via git repo:
+### Check on Mac itself via git repo:
 - (on Mac) run: `inspec exec https://github.com/gdha/inspec-path-check`
-## Check the docker container:
+### Check the docker container:
 - (on Mac) run: `inspec exec -t docker://$(docker ps -q) path-check`
-## Check the vagrant VM:
+### Check the vagrant VM:
 - (on Mac) run: `inspec exec -t ssh://client --password vagrant $BASEDIR/path-check`
 
-# Demonstrate the ssh-baseline InSpec profile (on Vagrant VM)
+## Demonstrate the ssh-baseline InSpec profile (on Vagrant VM)
 - (on Mac) run: `inspec exec -t ssh://client --password vagrant https://github.com/dev-sec/ssh-baseline`
 ```
      [expected output] Test Summary: 38 successful, 59 failures, 3 skipped
@@ -90,7 +92,7 @@ If you have questions or remarks mail at gratien . dhaese @ gmail . com
 ## Demonstrate kitchen test together with InSpec
 - (on Mac) run: `cd $BASEDIR/cookbooks/nginx_test`
 - (on Mac) run: `cat recipes/default.rb`
-- (on Mac) run: `kitchen converge`
+- (on Mac) run: `kitchen converge` (or `kitchen test` which combines converge and verify)
 - (on Mac) run: `kitchen verify`
 ```
     [expected output] Test Summary: 86 successful, 44 failures, 1 skipped
@@ -105,6 +107,13 @@ If you have questions or remarks mail at gratien . dhaese @ gmail . com
     [expected output] Test Summary: 129 successful, 1 failure, 1 skipped
 ```
 - (on Mac) run: `kitchen destroy`
+
+## Demonstrate DevSec Linux Security on a docker image with InSpec
+- (on Mac) run: `docker run -it ubuntu`
+- (on Mac - another window) run: `inspec exec https://github.com/dev-sec/linux-baseline -t docker://$(docker ps -q)`
+```
+   [expected output] Test Summary: 53 successful, 3 failures, 38 skipped
+```
 
 ## LICENSE
 

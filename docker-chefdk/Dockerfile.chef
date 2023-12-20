@@ -1,7 +1,7 @@
 # Original Source https://github.com/chef/chef-dk/blob/master/Dockerfile
 # gdha - use this Dockerfile for my InSpec demo
 
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 MAINTAINER Chef Software, Inc. <docker@chef.io>
 
 ARG CHANNEL=stable

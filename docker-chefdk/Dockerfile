@@ -1,6 +1,6 @@
 # https://hackernoon.com/can-you-run-chefdk-and-kitchen-docker-inside-of-a-docker-container-10c384571f34
 # Explains how this Dockerfile was composed as it is - excellent read!
-from ubuntu:18.04
+from ubuntu:22.04
 
 RUN apt-get update && \
     apt-get install -y curl docker.io vim locales build-essential
